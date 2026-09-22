@@ -73,6 +73,14 @@ export function formatSeconds(
 }
 
 /**
+ * Converts seconds to decimal hours string formatted with 2 decimal places (e.g. 121.78)
+ */
+export function formatDecimalHours(totalSeconds: number): string {
+  const hours = totalSeconds / 3600;
+  return hours.toFixed(2);
+}
+
+/**
  * Converts Agorot integer to Shekels formatted string e.g. "900.75 ₪"
  */
 export function formatAgorot(

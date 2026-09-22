@@ -64,12 +64,12 @@ export const SidebarDrawer: React.FC<SidebarDrawerProps> = ({
             {/* Header */}
             <div className="p-4 bg-slate-800 text-white flex items-center justify-between">
               <div className="flex items-center space-x-3 space-x-reverse">
-                <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-200">
-                  <User className="w-5 h-5" />
+                <div className="w-10 h-10 rounded-full bg-emerald-700 flex items-center justify-center text-white font-bold text-sm">
+                  סצ
                 </div>
                 <div>
-                  <h3 className="font-bold text-base text-white">משתמש אישי</h3>
-                  <p className="text-xs text-slate-300">אפליקציית דיווח נוכחות</p>
+                  <h3 className="font-bold text-base text-white">סגל צבי (30000241)</h3>
+                  <p className="text-xs text-slate-300">חברת נמלי ישראל • מתכנת</p>
                 </div>
               </div>
               <button
@@ -93,8 +93,8 @@ export const SidebarDrawer: React.FC<SidebarDrawerProps> = ({
                 >
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
                   <div className="flex flex-col text-right">
-                    <span className="font-bold text-sm text-emerald-900">שחזר גיבוי אישי מלא</span>
-                    <span className="text-xs text-emerald-700">שחזור 43 משמרות + שכר 159.3 ₪ והגדרות</span>
+                    <span className="font-bold text-sm text-emerald-900">שחזר דוח נוכחות מקורי</span>
+                    <span className="text-xs text-emerald-700">121.78 שעות (נמלי ישראל) + שכר 159.3 ₪</span>
                   </div>
                 </button>
 
@@ -168,9 +168,9 @@ export const SidebarDrawer: React.FC<SidebarDrawerProps> = ({
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
                 <div className="space-y-1">
-                  <h4 className="font-extrabold text-base text-slate-800">שחזור נתונים מלא</h4>
+                  <h4 className="font-extrabold text-base text-slate-800">שחזור דוח נוכחות מקורי</h4>
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    פעולה זו תשחזר במדויק את כל 43 המשמרות האישיות שלך, כולל תעריף 159.3 ₪ לשעה והגדרות התקן השבועיות.
+                    פעולה זו תשחזר במדויק את כל 12 ימי העבודה מחברת נמלי ישראל (121.78 שעות), ימי חג, היעדרות ותעריף 159.3 ₪ לשעה.
                   </p>
                 </div>
                 <div className="flex items-center space-x-2 space-x-reverse pt-2">

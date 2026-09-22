@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   calculateDay,
   formatDateDisplay,
+  formatDecimalHours,
   formatSeconds,
   getDayStatusInfo,
   HEBREW_WEEKDAYS,
@@ -154,6 +155,11 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
           <div className="text-base font-bold font-mono text-slate-800 mt-0.5">
             {formatSeconds(dayCalc.workedSeconds + dayCalc.creditedSeconds, false)}
           </div>
+          {(dayCalc.workedSeconds > 0 || dayCalc.creditedSeconds > 0) && (
+            <div className="text-3xs text-slate-500 font-mono mt-0.5">
+              ({formatDecimalHours(dayCalc.workedSeconds + dayCalc.creditedSeconds)})
+            </div>
+          )}
         </div>
 
         <div>
@@ -161,6 +167,11 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
           <div className="text-base font-bold font-mono text-slate-800 mt-0.5">
             {formatSeconds(dayCalc.requiredSeconds, false)}
           </div>
+          {dayCalc.requiredSeconds > 0 && (
+            <div className="text-3xs text-slate-500 font-mono mt-0.5">
+              ({formatDecimalHours(dayCalc.requiredSeconds)})
+            </div>
+          )}
         </div>
 
         <div>
@@ -172,6 +183,15 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
           >
             {formatSeconds(dayCalc.attendanceDifferenceSeconds, false, true)}
           </div>
+          {dayCalc.attendanceDifferenceSeconds !== 0 && (
+            <div
+              className={`text-3xs font-mono mt-0.5 ${
+                dayCalc.attendanceDifferenceSeconds > 0 ? 'text-emerald-700/80' : 'text-rose-700/80'
+              }`}
+            >
+              ({dayCalc.attendanceDifferenceSeconds > 0 ? '+' : ''}{formatDecimalHours(dayCalc.attendanceDifferenceSeconds)})
+            </div>
+          )}
         </div>
       </div>
 
@@ -240,7 +260,10 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
 
                   <div className="flex items-center space-x-3 space-x-reverse">
                     <div className="text-left font-mono font-bold text-slate-800 text-sm">
-                      {formatSeconds(durationSec, false)}
+                      <div>{formatSeconds(durationSec, false)}</div>
+                      <div className="text-3xs text-slate-500 font-normal">
+                        ({formatDecimalHours(durationSec)})
+                      </div>
                     </div>
 
                     <div className="flex items-center space-x-1 space-x-reverse">

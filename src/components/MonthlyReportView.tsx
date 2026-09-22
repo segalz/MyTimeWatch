@@ -3,6 +3,7 @@ import {
   calculateMonth,
   formatAgorot,
   formatDateDisplay,
+  formatDecimalHours,
   formatSeconds,
   getDayStatusInfo,
   HEBREW_WEEKDAYS_SHORT,
@@ -122,13 +123,31 @@ export const MonthlyReportView: React.FC<MonthlyReportViewProps> = ({
         </button>
       </div>
 
+      {/* Employee / Report Info Header Card */}
+      <div className="bg-white p-3 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
+        <div>
+          <div className="font-bold text-slate-900 text-sm">סגל צבי (30000241)</div>
+          <div className="text-slate-500 text-2xs mt-0.5">חברת נמלי ישראל • מתכנת (עובד חוץ)</div>
+        </div>
+        <div className="text-left font-mono">
+          <span className="bg-emerald-50 text-emerald-800 font-bold px-2 py-0.5 rounded-full border border-emerald-200">
+            {monthCalc.days.filter((d) => d.workedSeconds > 0).length} ימי נוכחות
+          </span>
+        </div>
+      </div>
+
       {/* Main Stats Grid */}
       <div className="grid grid-cols-2 gap-3">
         {/* Worked Hours */}
         <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
           <div className="text-xs font-semibold text-slate-500">שעות עבודה בפועל</div>
-          <div className="text-xl font-bold font-mono text-slate-800 mt-1">
-            {formatSeconds(monthCalc.workedSeconds + monthCalc.creditedSeconds, false)}
+          <div className="flex items-baseline space-x-1.5 space-x-reverse mt-1">
+            <span className="text-xl font-bold font-mono text-slate-800">
+              {formatSeconds(monthCalc.workedSeconds + monthCalc.creditedSeconds, false)}
+            </span>
+            <span className="text-xs font-mono font-semibold text-slate-500">
+              ({formatDecimalHours(monthCalc.workedSeconds + monthCalc.creditedSeconds)} שעות)
+            </span>
           </div>
           <div className="text-2xs text-slate-400 mt-0.5">
             {monthCalc.requiredSecondsToDate < monthCalc.requiredSeconds ? (
@@ -145,12 +164,21 @@ export const MonthlyReportView: React.FC<MonthlyReportViewProps> = ({
         {/* Monthly Balance */}
         <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
           <div className="text-xs font-semibold text-slate-500">מאזן נוכחות חודשי</div>
-          <div
-            className={`text-xl font-bold font-mono mt-1 ${
-              monthCalc.balanceSeconds >= 0 ? 'text-emerald-600' : 'text-rose-600'
-            }`}
-          >
-            {formatSeconds(monthCalc.balanceSeconds, false, true)}
+          <div className="flex items-baseline space-x-1.5 space-x-reverse mt-1">
+            <span
+              className={`text-xl font-bold font-mono ${
+                monthCalc.balanceSeconds >= 0 ? 'text-emerald-600' : 'text-rose-600'
+              }`}
+            >
+              {formatSeconds(monthCalc.balanceSeconds, false, true)}
+            </span>
+            <span
+              className={`text-xs font-mono font-semibold ${
+                monthCalc.balanceSeconds >= 0 ? 'text-emerald-700/80' : 'text-rose-700/80'
+              }`}
+            >
+              ({monthCalc.balanceSeconds >= 0 ? '+' : ''}{formatDecimalHours(monthCalc.balanceSeconds)})
+            </span>
           </div>
           <div className="text-2xs text-slate-400 mt-0.5">
             {monthCalc.balanceSeconds >= 0 ? 'עודף שעות' : 'חוסר בשעות'}
@@ -187,15 +215,15 @@ export const MonthlyReportView: React.FC<MonthlyReportViewProps> = ({
         <div className="grid grid-cols-2 gap-2 text-xs pt-1">
           <div className="p-2 bg-slate-50 rounded-lg flex justify-between">
             <span className="text-slate-600">נוספות 125%:</span>
-            <span className="font-bold font-mono text-slate-800">
-              {formatSeconds(monthCalc.dailyOvertime125Seconds, false)} ({formatAgorot(monthCalc.overtime125Agorot)})
+            <span className="font-bold font-mono text-slate-800 text-left">
+              {formatSeconds(monthCalc.dailyOvertime125Seconds, false)} ({formatDecimalHours(monthCalc.dailyOvertime125Seconds)}) • {formatAgorot(monthCalc.overtime125Agorot)}
             </span>
           </div>
 
           <div className="p-2 bg-slate-50 rounded-lg flex justify-between">
             <span className="text-slate-600">נוספות 150%:</span>
-            <span className="font-bold font-mono text-slate-800">
-              {formatSeconds(monthCalc.dailyOvertime150Seconds, false)} ({formatAgorot(monthCalc.overtime150Agorot)})
+            <span className="font-bold font-mono text-slate-800 text-left">
+              {formatSeconds(monthCalc.dailyOvertime150Seconds, false)} ({formatDecimalHours(monthCalc.dailyOvertime150Seconds)}) • {formatAgorot(monthCalc.overtime150Agorot)}
             </span>
           </div>
 
@@ -362,6 +390,11 @@ export const MonthlyReportView: React.FC<MonthlyReportViewProps> = ({
                   <div className="font-bold text-slate-800">
                     {formatSeconds(day.workedSeconds + day.creditedSeconds, false)}
                   </div>
+                  {(day.workedSeconds > 0 || day.creditedSeconds > 0) && (
+                    <div className="text-3xs text-slate-400">
+                      {formatDecimalHours(day.workedSeconds + day.creditedSeconds)} שעות
+                    </div>
+                  )}
                   {day.attendanceDifferenceSeconds !== 0 && (
                     <div
                       className={`text-3xs font-semibold ${

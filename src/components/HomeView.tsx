@@ -3,6 +3,7 @@ import {
   calculateDay,
   calculateMonth,
   formatAgorot,
+  formatDecimalHours,
   formatSeconds,
   getSessionDurationSeconds,
   toLocalDateString,
@@ -300,6 +301,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   <span className="font-mono font-bold text-slate-900">
                     {formatSeconds(todayCalc.workedSeconds, true)}
                   </span>
+                  <span className="font-mono text-xs text-slate-500 font-semibold mr-1">
+                    ({formatDecimalHours(todayCalc.workedSeconds)} שעות)
+                  </span>
                 </span>
                 {todaySessions.length > 1 && (
                   <span className="text-xs text-slate-400 block mt-0.5">
@@ -421,13 +425,22 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="text-sm font-extrabold text-slate-800 flex items-center justify-center space-x-4 space-x-reverse pt-2 border-t border-slate-200/80">
           <div className="text-center">
             <span className="text-xs text-slate-600 block mb-0.5">מאזן החודש נכון להיום:</span>
-            <span
-              className={`font-mono text-base ${
-                monthCalc.balanceSeconds >= 0 ? 'text-emerald-600' : 'text-rose-600 font-bold'
-              }`}
-            >
-              {formatSeconds(monthCalc.balanceSeconds, false, true)}
-            </span>
+            <div className="flex items-baseline justify-center space-x-1 space-x-reverse">
+              <span
+                className={`font-mono text-base ${
+                  monthCalc.balanceSeconds >= 0 ? 'text-emerald-600' : 'text-rose-600 font-bold'
+                }`}
+              >
+                {formatSeconds(monthCalc.balanceSeconds, false, true)}
+              </span>
+              <span
+                className={`font-mono text-2xs ${
+                  monthCalc.balanceSeconds >= 0 ? 'text-emerald-700/80' : 'text-rose-700/80'
+                }`}
+              >
+                ({monthCalc.balanceSeconds >= 0 ? '+' : ''}{formatDecimalHours(monthCalc.balanceSeconds)})
+              </span>
+            </div>
           </div>
 
           <span className="text-slate-300 font-normal self-center">|</span>
@@ -533,11 +546,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   <span className="font-mono text-slate-800 font-bold dir-ltr">
                     {startTime} - {endTime}
                   </span>
-                  <span className="text-slate-500 font-mono">
+                  <span className="text-slate-500 font-mono text-xs">
                     {formatSeconds(
                       getSessionDurationSeconds(s, now),
                       false
-                    )}
+                    )}{' '}
+                    ({formatDecimalHours(getSessionDurationSeconds(s, now))})
                   </span>
                 </div>
               );

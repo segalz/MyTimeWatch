@@ -2,10 +2,10 @@ import { DEFAULT_SETTINGS, toLocalDateString } from '../domain/attendance';
 import { AppSettings, AutoClockOutConfig, DayRecord, WorkSession } from '../types';
 import { EMBEDDED_USER_BACKUP } from '../data/userBackup';
 
-const SETTINGS_KEY = 'worklog_pro_settings_v2';
-const SESSIONS_KEY = 'worklog_pro_sessions_v2';
-const DAY_RECORDS_KEY = 'worklog_pro_day_records_v2';
-const AUTO_CLOCK_OUT_KEY = 'worklog_pro_auto_clock_out_v2';
+const SETTINGS_KEY = 'worklog_pro_settings_v4';
+const SESSIONS_KEY = 'worklog_pro_sessions_v4';
+const DAY_RECORDS_KEY = 'worklog_pro_day_records_v4';
+const AUTO_CLOCK_OUT_KEY = 'worklog_pro_auto_clock_out_v4';
 
 export class StorageService {
   /**

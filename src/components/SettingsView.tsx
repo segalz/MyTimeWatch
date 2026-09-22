@@ -502,10 +502,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             className="w-full flex items-center justify-center space-x-2 space-x-reverse bg-emerald-500 hover:bg-emerald-600 text-white p-2.5 rounded-xl font-bold transition-all shadow-xs"
           >
             <CheckCircle2 className="w-4 h-4" />
-            <span>שחזר גיבוי אחרון (43 משמרות + הגדרות)</span>
+            <span>שחזר נתונים מקוריים (דוח נוכחות נמלי ישראל)</span>
           </button>
           <p className="text-3xs text-slate-400 text-center mt-1">
-            משחזר ישירות את הנתונים שלך (כולל תעריף 159.3 ₪ והדיווחים עד ספטמבר)
+            משחזר ישירות את הנתונים המדויקים (121.78 שעות עבודה, תעריף 159.3 ₪, חגים והיעדרות)
           </p>
         </div>
 
@@ -550,11 +550,11 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               <CheckCircle2 className="w-6 h-6" />
             </div>
             <div className="space-y-1">
-              <h4 className="font-extrabold text-base text-slate-800">שחזור נתונים מגיבוי</h4>
+              <h4 className="font-extrabold text-base text-slate-800">שחזור נתוני נוכחות</h4>
               <p className="text-xs text-slate-600 leading-relaxed">
-                האם לשחזר את הגיבוי האחרון שנשמר במערכת?
+                האם לשחזר את נתוני הדוח הרשמי?
                 <br />
-                <span className="font-semibold text-slate-800">43 משמרות עבודה, הגדרות שכר (159.3 ₪ לשעה) ותקן מלא.</span>
+                <span className="font-semibold text-slate-800">12 ימי עבודה (121.78 שעות), תעריף 159.3 ₪ לשעה, ימי חג והיעדרות.</span>
               </p>
             </div>
             <div className="flex items-center space-x-2 space-x-reverse pt-2">

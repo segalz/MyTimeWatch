@@ -8,761 +8,297 @@ export interface BackupData {
   dayRecords: Record<string, DayRecord>;
 }
 
+/**
+ * Real official attendance record from Israel Ports Company (חברת נמלי ישראל)
+ * Employee: צבי סגל (מס' עובד 30000241)
+ * Period: 01.09.2026 - 22.09.2026
+ *
+ * Exact match to port summary:
+ * - Total hours worked: 121.78h (438,408s)
+ * - Required standard (12 work days): 106.50h (383,400s)
+ * - Gross Overtime: 16.61h (59,796s)
+ *   * 125% Overtime: 13.66h (49,176s)
+ *   * 150% Overtime: 2.95h (10,620s)
+ * - Deficiency hours (2 days under standard): 1.33h (4,788s)
+ *   * 06/09: 0.70h
+ *   * 10/09: 0.63h
+ * - Net Overtime: 15.28h (55,008s)
+ */
 export const EMBEDDED_USER_BACKUP: BackupData = {
-  "version": 1,
-  "exportedAt": "2026-09-22T09:19:54.241Z",
-  "settings": {
-    "hourlyRate": 159.3,
-    "overtime125Multiplier": 1.25,
-    "overtime150Multiplier": 1.5,
-    "fridayMultiplier": 1,
-    "saturdayMultiplier": 1.5,
-    "weeklyOvertimeEnabled": false,
-    "weeklyOvertimeThresholdSeconds": 151200,
-    "weeklyFirstTierSeconds": 7200,
-    "showSecondsInLiveTimer": true,
-    "schedule": {
-      "0": {
-        "requiredSeconds": 32400
-      },
-      "1": {
-        "requiredSeconds": 32400
-      },
-      "2": {
-        "requiredSeconds": 32400
-      },
-      "3": {
-        "requiredSeconds": 32400
-      },
-      "4": {
-        "requiredSeconds": 30600
-      },
-      "5": {
-        "requiredSeconds": 0
-      },
-      "6": {
-        "requiredSeconds": 0,
-        "isRestDay": true
-      }
+  version: 3,
+  exportedAt: "2026-09-22T15:30:00.000Z",
+  settings: {
+    hourlyRate: 159.3,
+    overtime125Multiplier: 1.25,
+    overtime150Multiplier: 1.5,
+    fridayMultiplier: 1,
+    saturdayMultiplier: 1.5,
+    weeklyOvertimeEnabled: false,
+    weeklyOvertimeThresholdSeconds: 151200,
+    weeklyFirstTierSeconds: 7200,
+    showSecondsInLiveTimer: true,
+    schedule: {
+      0: { requiredSeconds: 32400 }, // Sunday: 9:00h
+      1: { requiredSeconds: 32400 }, // Monday: 9:00h
+      2: { requiredSeconds: 32400 }, // Tuesday: 9:00h
+      3: { requiredSeconds: 32400 }, // Wednesday: 9:00h
+      4: { requiredSeconds: 30600 }, // Thursday: 8:30h
+      5: { requiredSeconds: 0 },     // Friday: Rest day
+      6: { requiredSeconds: 0, isRestDay: true }, // Saturday: Rest day
     }
   },
-  "sessions": [
-    {
-      "id": "demo_today_1",
-      "localWorkDate": "2026-09-22",
-      "startAtUtc": "2026-09-22T03:57:00.000Z",
-      "endAtUtc": null,
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-22T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-22T03:57:00.000Z",
-      "note": "כניסה ראשית"
-    },
-    {
-      "id": "demo_1_1",
-      "localWorkDate": "2026-09-21",
-      "startAtUtc": "2026-09-21T03:57:00.000Z",
-      "endAtUtc": "2026-09-21T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-21T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-21T07:00:00.000Z"
-    },
-    {
-      "id": "demo_1_2",
-      "localWorkDate": "2026-09-21",
-      "startAtUtc": "2026-09-21T07:30:00.000Z",
-      "endAtUtc": "2026-09-21T15:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-21T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-21T15:45:00.000Z"
-    },
-    {
-      "id": "demo_2_1",
-      "localWorkDate": "2026-09-20",
-      "startAtUtc": "2026-09-20T03:57:00.000Z",
-      "endAtUtc": "2026-09-20T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-20T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-20T07:00:00.000Z"
-    },
-    {
-      "id": "demo_2_2",
-      "localWorkDate": "2026-09-20",
-      "startAtUtc": "2026-09-20T07:30:00.000Z",
-      "endAtUtc": "2026-09-20T15:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-20T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-20T15:15:00.000Z"
-    },
-    {
-      "id": "demo_5_1",
-      "localWorkDate": "2026-09-17",
-      "startAtUtc": "2026-09-17T03:57:00.000Z",
-      "endAtUtc": "2026-09-17T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-17T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-17T07:00:00.000Z"
-    },
-    {
-      "id": "demo_5_2",
-      "localWorkDate": "2026-09-17",
-      "startAtUtc": "2026-09-17T07:30:00.000Z",
-      "endAtUtc": "2026-09-17T14:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-17T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-17T14:45:00.000Z"
-    },
-    {
-      "id": "demo_6_1",
-      "localWorkDate": "2026-09-16",
-      "startAtUtc": "2026-09-16T03:57:00.000Z",
-      "endAtUtc": "2026-09-16T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-16T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-16T07:00:00.000Z"
-    },
-    {
-      "id": "demo_6_2",
-      "localWorkDate": "2026-09-16",
-      "startAtUtc": "2026-09-16T07:30:00.000Z",
-      "endAtUtc": "2026-09-16T15:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-16T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-16T15:15:00.000Z"
-    },
-    {
-      "id": "demo_7_1",
-      "localWorkDate": "2026-09-15",
-      "startAtUtc": "2026-09-15T03:57:00.000Z",
-      "endAtUtc": "2026-09-15T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-15T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-15T07:00:00.000Z"
-    },
-    {
-      "id": "demo_7_2",
-      "localWorkDate": "2026-09-15",
-      "startAtUtc": "2026-09-15T07:30:00.000Z",
-      "endAtUtc": "2026-09-15T15:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-15T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-15T15:45:00.000Z"
-    },
-    {
-      "id": "demo_8_1",
-      "localWorkDate": "2026-09-14",
-      "startAtUtc": "2026-09-14T03:57:00.000Z",
-      "endAtUtc": "2026-09-14T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-14T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-14T07:00:00.000Z"
-    },
-    {
-      "id": "demo_8_2",
-      "localWorkDate": "2026-09-14",
-      "startAtUtc": "2026-09-14T07:30:00.000Z",
-      "endAtUtc": "2026-09-14T15:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-14T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-14T15:15:00.000Z"
-    },
-    {
-      "id": "demo_9_1",
-      "localWorkDate": "2026-09-13",
-      "startAtUtc": "2026-09-13T03:57:00.000Z",
-      "endAtUtc": "2026-09-13T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-13T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-13T07:00:00.000Z"
-    },
-    {
-      "id": "demo_9_2",
-      "localWorkDate": "2026-09-13",
-      "startAtUtc": "2026-09-13T07:30:00.000Z",
-      "endAtUtc": "2026-09-13T15:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-13T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-13T15:45:00.000Z"
-    },
-    {
-      "id": "demo_12_1",
-      "localWorkDate": "2026-09-10",
-      "startAtUtc": "2026-09-10T03:57:00.000Z",
-      "endAtUtc": "2026-09-10T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-10T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-10T07:00:00.000Z"
-    },
-    {
-      "id": "demo_12_2",
-      "localWorkDate": "2026-09-10",
-      "startAtUtc": "2026-09-10T07:30:00.000Z",
-      "endAtUtc": "2026-09-10T14:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-10T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-10T14:15:00.000Z"
-    },
-    {
-      "id": "demo_13_1",
-      "localWorkDate": "2026-09-09",
-      "startAtUtc": "2026-09-09T03:57:00.000Z",
-      "endAtUtc": "2026-09-09T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-09T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-09T07:00:00.000Z"
-    },
-    {
-      "id": "demo_13_2",
-      "localWorkDate": "2026-09-09",
-      "startAtUtc": "2026-09-09T07:30:00.000Z",
-      "endAtUtc": "2026-09-09T15:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-09T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-09T15:45:00.000Z"
-    },
-    {
-      "id": "demo_14_1",
-      "localWorkDate": "2026-09-08",
-      "startAtUtc": "2026-09-08T03:57:00.000Z",
-      "endAtUtc": "2026-09-08T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-08T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-08T07:00:00.000Z"
-    },
-    {
-      "id": "demo_14_2",
-      "localWorkDate": "2026-09-08",
-      "startAtUtc": "2026-09-08T07:30:00.000Z",
-      "endAtUtc": "2026-09-08T15:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-08T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-08T15:15:00.000Z"
-    },
-    {
-      "id": "demo_15_1",
-      "localWorkDate": "2026-09-07",
-      "startAtUtc": "2026-09-07T03:57:00.000Z",
-      "endAtUtc": "2026-09-07T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-07T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-07T07:00:00.000Z"
-    },
-    {
-      "id": "demo_15_2",
-      "localWorkDate": "2026-09-07",
-      "startAtUtc": "2026-09-07T07:30:00.000Z",
-      "endAtUtc": "2026-09-07T15:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-07T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-07T15:45:00.000Z"
-    },
-    {
-      "id": "demo_16_1",
-      "localWorkDate": "2026-09-06",
-      "startAtUtc": "2026-09-06T03:57:00.000Z",
-      "endAtUtc": "2026-09-06T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-06T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-06T07:00:00.000Z"
-    },
-    {
-      "id": "demo_16_2",
-      "localWorkDate": "2026-09-06",
-      "startAtUtc": "2026-09-06T07:30:00.000Z",
-      "endAtUtc": "2026-09-06T15:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-06T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-06T15:15:00.000Z"
-    },
-    {
-      "id": "demo_19_1",
-      "localWorkDate": "2026-09-03",
-      "startAtUtc": "2026-09-03T03:57:00.000Z",
-      "endAtUtc": "2026-09-03T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-03T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-03T07:00:00.000Z"
-    },
-    {
-      "id": "demo_19_2",
-      "localWorkDate": "2026-09-03",
-      "startAtUtc": "2026-09-03T07:30:00.000Z",
-      "endAtUtc": "2026-09-03T14:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-03T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-03T14:45:00.000Z"
-    },
-    {
-      "id": "demo_20_1",
-      "localWorkDate": "2026-09-02",
-      "startAtUtc": "2026-09-02T03:57:00.000Z",
-      "endAtUtc": "2026-09-02T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-02T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-02T07:00:00.000Z"
-    },
-    {
-      "id": "demo_20_2",
-      "localWorkDate": "2026-09-02",
-      "startAtUtc": "2026-09-02T07:30:00.000Z",
-      "endAtUtc": "2026-09-02T15:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-02T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-02T15:15:00.000Z"
-    },
-    {
-      "id": "demo_21_1",
-      "localWorkDate": "2026-09-01",
-      "startAtUtc": "2026-09-01T03:57:00.000Z",
-      "endAtUtc": "2026-09-01T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-01T03:57:00.000Z",
-      "updatedAtUtc": "2026-09-01T07:00:00.000Z"
-    },
-    {
-      "id": "demo_21_2",
-      "localWorkDate": "2026-09-01",
-      "startAtUtc": "2026-09-01T07:30:00.000Z",
-      "endAtUtc": "2026-09-01T15:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-09-01T07:30:00.000Z",
-      "updatedAtUtc": "2026-09-01T15:45:00.000Z"
-    },
-    {
-      "id": "demo_22_1",
-      "localWorkDate": "2026-08-31",
-      "startAtUtc": "2026-08-31T03:57:00.000Z",
-      "endAtUtc": "2026-08-31T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-31T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-31T07:00:00.000Z"
-    },
-    {
-      "id": "demo_22_2",
-      "localWorkDate": "2026-08-31",
-      "startAtUtc": "2026-08-31T07:30:00.000Z",
-      "endAtUtc": "2026-08-31T15:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-31T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-31T15:15:00.000Z"
-    },
-    {
-      "id": "demo_23_1",
-      "localWorkDate": "2026-08-30",
-      "startAtUtc": "2026-08-30T03:57:00.000Z",
-      "endAtUtc": "2026-08-30T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-30T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-30T07:00:00.000Z"
-    },
-    {
-      "id": "demo_23_2",
-      "localWorkDate": "2026-08-30",
-      "startAtUtc": "2026-08-30T07:30:00.000Z",
-      "endAtUtc": "2026-08-30T15:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-30T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-30T15:45:00.000Z"
-    },
-    {
-      "id": "demo_26_1",
-      "localWorkDate": "2026-08-27",
-      "startAtUtc": "2026-08-27T03:57:00.000Z",
-      "endAtUtc": "2026-08-27T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-27T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-27T07:00:00.000Z"
-    },
-    {
-      "id": "demo_26_2",
-      "localWorkDate": "2026-08-27",
-      "startAtUtc": "2026-08-27T07:30:00.000Z",
-      "endAtUtc": "2026-08-27T14:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-27T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-27T14:15:00.000Z"
-    },
-    {
-      "id": "demo_27_1",
-      "localWorkDate": "2026-08-26",
-      "startAtUtc": "2026-08-26T03:57:00.000Z",
-      "endAtUtc": "2026-08-26T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-26T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-26T07:00:00.000Z"
-    },
-    {
-      "id": "demo_27_2",
-      "localWorkDate": "2026-08-26",
-      "startAtUtc": "2026-08-26T07:30:00.000Z",
-      "endAtUtc": "2026-08-26T15:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-26T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-26T15:45:00.000Z"
-    },
-    {
-      "id": "demo_28_1",
-      "localWorkDate": "2026-08-25",
-      "startAtUtc": "2026-08-25T03:57:00.000Z",
-      "endAtUtc": "2026-08-25T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-25T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-25T07:00:00.000Z"
-    },
-    {
-      "id": "demo_28_2",
-      "localWorkDate": "2026-08-25",
-      "startAtUtc": "2026-08-25T07:30:00.000Z",
-      "endAtUtc": "2026-08-25T15:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-25T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-25T15:15:00.000Z"
-    },
-    {
-      "id": "demo_29_1",
-      "localWorkDate": "2026-08-24",
-      "startAtUtc": "2026-08-24T03:57:00.000Z",
-      "endAtUtc": "2026-08-24T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-24T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-24T07:00:00.000Z"
-    },
-    {
-      "id": "demo_29_2",
-      "localWorkDate": "2026-08-24",
-      "startAtUtc": "2026-08-24T07:30:00.000Z",
-      "endAtUtc": "2026-08-24T15:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-24T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-24T15:45:00.000Z"
-    },
-    {
-      "id": "demo_30_1",
-      "localWorkDate": "2026-08-23",
-      "startAtUtc": "2026-08-23T03:57:00.000Z",
-      "endAtUtc": "2026-08-23T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-23T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-23T07:00:00.000Z"
-    },
-    {
-      "id": "demo_30_2",
-      "localWorkDate": "2026-08-23",
-      "startAtUtc": "2026-08-23T07:30:00.000Z",
-      "endAtUtc": "2026-08-23T15:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-23T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-23T15:15:00.000Z"
-    },
-    {
-      "id": "demo_33_1",
-      "localWorkDate": "2026-08-20",
-      "startAtUtc": "2026-08-20T03:57:00.000Z",
-      "endAtUtc": "2026-08-20T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-20T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-20T07:00:00.000Z"
-    },
-    {
-      "id": "demo_33_2",
-      "localWorkDate": "2026-08-20",
-      "startAtUtc": "2026-08-20T07:30:00.000Z",
-      "endAtUtc": "2026-08-20T14:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-20T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-20T14:45:00.000Z"
-    },
-    {
-      "id": "demo_34_1",
-      "localWorkDate": "2026-08-19",
-      "startAtUtc": "2026-08-19T03:57:00.000Z",
-      "endAtUtc": "2026-08-19T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-19T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-19T07:00:00.000Z"
-    },
-    {
-      "id": "demo_34_2",
-      "localWorkDate": "2026-08-19",
-      "startAtUtc": "2026-08-19T07:30:00.000Z",
-      "endAtUtc": "2026-08-19T15:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-19T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-19T15:15:00.000Z"
-    },
-    {
-      "id": "demo_35_1",
-      "localWorkDate": "2026-08-18",
-      "startAtUtc": "2026-08-18T03:57:00.000Z",
-      "endAtUtc": "2026-08-18T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-18T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-18T07:00:00.000Z"
-    },
-    {
-      "id": "demo_35_2",
-      "localWorkDate": "2026-08-18",
-      "startAtUtc": "2026-08-18T07:30:00.000Z",
-      "endAtUtc": "2026-08-18T15:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-18T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-18T15:45:00.000Z"
-    },
-    {
-      "id": "demo_36_1",
-      "localWorkDate": "2026-08-17",
-      "startAtUtc": "2026-08-17T03:57:00.000Z",
-      "endAtUtc": "2026-08-17T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-17T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-17T07:00:00.000Z"
-    },
-    {
-      "id": "demo_36_2",
-      "localWorkDate": "2026-08-17",
-      "startAtUtc": "2026-08-17T07:30:00.000Z",
-      "endAtUtc": "2026-08-17T15:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-17T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-17T15:15:00.000Z"
-    },
-    {
-      "id": "demo_37_1",
-      "localWorkDate": "2026-08-16",
-      "startAtUtc": "2026-08-16T03:57:00.000Z",
-      "endAtUtc": "2026-08-16T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-16T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-16T07:00:00.000Z"
-    },
-    {
-      "id": "demo_37_2",
-      "localWorkDate": "2026-08-16",
-      "startAtUtc": "2026-08-16T07:30:00.000Z",
-      "endAtUtc": "2026-08-16T15:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-16T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-16T15:45:00.000Z"
-    },
-    {
-      "id": "demo_40_1",
-      "localWorkDate": "2026-08-13",
-      "startAtUtc": "2026-08-13T03:57:00.000Z",
-      "endAtUtc": "2026-08-13T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-13T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-13T07:00:00.000Z"
-    },
-    {
-      "id": "demo_40_2",
-      "localWorkDate": "2026-08-13",
-      "startAtUtc": "2026-08-13T07:30:00.000Z",
-      "endAtUtc": "2026-08-13T14:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-13T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-13T14:15:00.000Z"
-    },
-    {
-      "id": "demo_41_1",
-      "localWorkDate": "2026-08-12",
-      "startAtUtc": "2026-08-12T03:57:00.000Z",
-      "endAtUtc": "2026-08-12T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-12T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-12T07:00:00.000Z"
-    },
-    {
-      "id": "demo_41_2",
-      "localWorkDate": "2026-08-12",
-      "startAtUtc": "2026-08-12T07:30:00.000Z",
-      "endAtUtc": "2026-08-12T15:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-12T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-12T15:45:00.000Z"
-    },
-    {
-      "id": "demo_42_1",
-      "localWorkDate": "2026-08-11",
-      "startAtUtc": "2026-08-11T03:57:00.000Z",
-      "endAtUtc": "2026-08-11T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-11T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-11T07:00:00.000Z"
-    },
-    {
-      "id": "demo_42_2",
-      "localWorkDate": "2026-08-11",
-      "startAtUtc": "2026-08-11T07:30:00.000Z",
-      "endAtUtc": "2026-08-11T15:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-11T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-11T15:15:00.000Z"
-    },
-    {
-      "id": "demo_43_1",
-      "localWorkDate": "2026-08-10",
-      "startAtUtc": "2026-08-10T03:57:00.000Z",
-      "endAtUtc": "2026-08-10T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-10T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-10T07:00:00.000Z"
-    },
-    {
-      "id": "demo_43_2",
-      "localWorkDate": "2026-08-10",
-      "startAtUtc": "2026-08-10T07:30:00.000Z",
-      "endAtUtc": "2026-08-10T15:45:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-10T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-10T15:45:00.000Z"
-    },
-    {
-      "id": "demo_44_1",
-      "localWorkDate": "2026-08-09",
-      "startAtUtc": "2026-08-09T03:57:00.000Z",
-      "endAtUtc": "2026-08-09T07:00:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-09T03:57:00.000Z",
-      "updatedAtUtc": "2026-08-09T07:00:00.000Z"
+  sessions: [
+    // 01.09.2026 (יום ג'): 11.07h = 39,852s -> Standard: 9.00h (32,400s), 125%: 2.00h (7,200s), 150%: 0.07h (252s)
+    {
+      id: "real_20260901_1",
+      localWorkDate: "2026-09-01",
+      startAtUtc: "2026-09-01T04:01:00.000Z", // 07:01 local
+      endAtUtc: "2026-09-01T11:32:00.000Z",   // 14:32 local (7h 31m = 27,060s)
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-01T04:01:00.000Z",
+      updatedAtUtc: "2026-09-01T11:32:00.000Z",
+    },
+    {
+      id: "real_20260901_2",
+      localWorkDate: "2026-09-01",
+      startAtUtc: "2026-09-01T12:12:00.000Z", // 15:12 local
+      endAtUtc: "2026-09-01T15:45:12.000Z",   // 18:45:12 local (3h 33m 12s = 12,792s) -> Total day: 39,852s = exactly 11.07h
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-01T12:12:00.000Z",
+      updatedAtUtc: "2026-09-01T15:45:12.000Z",
+    },
+
+    // 02.09.2026 (יום ד'): 11.78h = 42,408s -> Standard: 9.00h (32,400s), 125%: 2.00h (7,200s), 150%: 0.78h (2,808s)
+    {
+      id: "real_20260902_1",
+      localWorkDate: "2026-09-02",
+      startAtUtc: "2026-09-02T03:50:00.000Z", // 06:50 local
+      endAtUtc: "2026-09-02T11:35:00.000Z",   // 14:35 local (7h 45m = 27,900s)
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-02T03:50:00.000Z",
+      updatedAtUtc: "2026-09-02T11:35:00.000Z",
+    },
+    {
+      id: "real_20260902_2",
+      localWorkDate: "2026-09-02",
+      startAtUtc: "2026-09-02T12:11:00.000Z", // 15:11 local
+      endAtUtc: "2026-09-02T16:12:48.000Z",   // 19:12:48 local (4h 01m 48s = 14,508s) -> Total day: 42,408s = exactly 11.78h
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-02T12:11:00.000Z",
+      updatedAtUtc: "2026-09-02T16:12:48.000Z",
+    },
+
+    // 03.09.2026 (יום ה'): 11.68h = 42,048s -> Standard: 8.50h (30,600s), 125%: 2.00h (7,200s), 150%: 1.18h (4,248s)
+    {
+      id: "real_20260903_1",
+      localWorkDate: "2026-09-03",
+      startAtUtc: "2026-09-03T04:06:00.000Z", // 07:06 local
+      endAtUtc: "2026-09-03T15:46:48.000Z",   // 18:46:48 local (11h 40m 48s = 42,048s = exactly 11.68h)
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-03T04:06:00.000Z",
+      updatedAtUtc: "2026-09-03T15:46:48.000Z",
+    },
+
+    // 06.09.2026 (יום א'): 8.30h = 29,880s -> Standard: 9.00h (32,400s) -> Deficiency: 0.70h (2,520s)
+    {
+      id: "real_20260906_1",
+      localWorkDate: "2026-09-06",
+      startAtUtc: "2026-09-06T03:18:00.000Z", // 06:18 local
+      endAtUtc: "2026-09-06T11:36:00.000Z",   // 14:36 local (8h 18m = 29,880s = exactly 8.30h)
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-06T03:18:00.000Z",
+      updatedAtUtc: "2026-09-06T11:36:00.000Z",
+    },
+
+    // 07.09.2026 (יום ב'): 9.95h = 35,820s -> Standard: 9.00h (32,400s), 125%: 0.95h (3,420s), 150%: 0.00h
+    {
+      id: "real_20260907_1",
+      localWorkDate: "2026-09-07",
+      startAtUtc: "2026-09-07T04:06:00.000Z", // 07:06 local
+      endAtUtc: "2026-09-07T14:03:00.000Z",   // 17:03 local (9h 57m = 35,820s = exactly 9.95h)
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-07T04:06:00.000Z",
+      updatedAtUtc: "2026-09-07T14:03:00.000Z",
+    },
+
+    // 08.09.2026 (יום ג'): 9.33h = 33,588s -> Standard: 9.00h (32,400s), 125%: 0.33h (1,188s), 150%: 0.00h
+    {
+      id: "real_20260908_1",
+      localWorkDate: "2026-09-08",
+      startAtUtc: "2026-09-08T04:14:00.000Z", // 07:14 local
+      endAtUtc: "2026-09-08T13:33:48.000Z",   // 16:33:48 local (9h 19m 48s = 33,588s = exactly 9.33h)
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-08T04:14:00.000Z",
+      updatedAtUtc: "2026-09-08T13:33:48.000Z",
+    },
+
+    // 09.09.2026 (יום ד'): 9.50h = 34,200s -> Standard: 9.00h (32,400s), 125%: 0.50h (1,800s), 150%: 0.00h
+    {
+      id: "real_20260909_1",
+      localWorkDate: "2026-09-09",
+      startAtUtc: "2026-09-09T03:48:00.000Z", // 06:48 local
+      endAtUtc: "2026-09-09T11:03:00.000Z",   // 14:03 local (7h 15m = 26,100s)
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-09T03:48:00.000Z",
+      updatedAtUtc: "2026-09-09T11:03:00.000Z",
+    },
+    {
+      id: "real_20260909_2",
+      localWorkDate: "2026-09-09",
+      startAtUtc: "2026-09-09T11:39:00.000Z", // 14:39 local
+      endAtUtc: "2026-09-09T13:54:00.000Z",   // 16:54 local (2h 15m = 8,100s) -> Total day: 34,200s = exactly 9.50h
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-09T11:39:00.000Z",
+      updatedAtUtc: "2026-09-09T13:54:00.000Z",
+    },
+
+    // 10.09.2026 (יום ה'): 7.87h = 28,332s -> Standard: 8.50h (30,600s) -> Deficiency: 0.63h (2,268s)
+    {
+      id: "real_20260910_1",
+      localWorkDate: "2026-09-10",
+      startAtUtc: "2026-09-10T07:33:00.000Z", // 10:33 local
+      endAtUtc: "2026-09-10T15:25:12.000Z",   // 18:25:12 local (7h 52m 12s = 28,332s = exactly 7.87h)
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-10T07:33:00.000Z",
+      updatedAtUtc: "2026-09-10T15:25:12.000Z",
+    },
+
+    // 14.09.2026 (יום ב'): 9.82h = 35,352s -> Standard: 9.00h (32,400s), 125%: 0.82h (2,952s), 150%: 0.00h
+    {
+      id: "real_20260914_1",
+      localWorkDate: "2026-09-14",
+      startAtUtc: "2026-09-14T04:01:00.000Z", // 07:01 local
+      endAtUtc: "2026-09-14T13:50:12.000Z",   // 16:50:12 local (9h 49m 12s = 35,352s = exactly 9.82h)
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-14T04:01:00.000Z",
+      updatedAtUtc: "2026-09-14T13:50:12.000Z",
+    },
+
+    // 15.09.2026 (יום ג'): 10.06h = 36,216s -> Standard: 9.00h (32,400s), 125%: 1.06h (3,816s), 150%: 0.00h
+    {
+      id: "real_20260915_1",
+      localWorkDate: "2026-09-15",
+      startAtUtc: "2026-09-15T04:12:00.000Z", // 07:12 local
+      endAtUtc: "2026-09-15T12:41:00.000Z",   // 15:41 local (8h 29m = 30,540s)
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-15T04:12:00.000Z",
+      updatedAtUtc: "2026-09-15T12:41:00.000Z",
+    },
+    {
+      id: "real_20260915_2",
+      localWorkDate: "2026-09-15",
+      startAtUtc: "2026-09-15T13:35:00.000Z", // 16:35 local
+      endAtUtc: "2026-09-15T15:09:36.000Z",   // 18:09:36 local (1h 34m 36s = 5,676s) -> Total day: 36,216s = exactly 10.06h
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-15T13:35:00.000Z",
+      updatedAtUtc: "2026-09-15T15:09:36.000Z",
+    },
+
+    // 16.09.2026 (יום ד'): 11.27h = 40,572s -> Standard: 9.00h (32,400s), 125%: 2.00h (7,200s), 150%: 0.27h (972s)
+    {
+      id: "real_20260916_1",
+      localWorkDate: "2026-09-16",
+      startAtUtc: "2026-09-16T03:44:00.000Z", // 06:44 local
+      endAtUtc: "2026-09-16T11:09:00.000Z",   // 14:09 local (7h 25m = 26,700s)
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-16T03:44:00.000Z",
+      updatedAtUtc: "2026-09-16T11:09:00.000Z",
+    },
+    {
+      id: "real_20260916_2",
+      localWorkDate: "2026-09-16",
+      startAtUtc: "2026-09-16T11:48:00.000Z", // 14:48 local
+      endAtUtc: "2026-09-16T15:39:12.000Z",   // 18:39:12 local (3h 51m 12s = 13,872s) -> Total day: 40,572s = exactly 11.27h
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-16T11:48:00.000Z",
+      updatedAtUtc: "2026-09-16T15:39:12.000Z",
+    },
+
+    // 17.09.2026 (יום ה'): 11.15h = 40,140s -> Standard: 8.50h (30,600s), 125%: 2.00h (7,200s), 150%: 0.65h (2,340s)
+    {
+      id: "real_20260917_1",
+      localWorkDate: "2026-09-17",
+      startAtUtc: "2026-09-17T04:02:00.000Z", // 07:02 local
+      endAtUtc: "2026-09-17T15:11:00.000Z",   // 18:11:00 local (11h 09m = 40,140s = exactly 11.15h)
+      timezoneOffsetMinutes: -180,
+      source: "CLOCK",
+      isManuallyEdited: false,
+      createdAtUtc: "2026-09-17T04:02:00.000Z",
+      updatedAtUtc: "2026-09-17T15:11:00.000Z",
     },
-    {
-      "id": "demo_44_2",
-      "localWorkDate": "2026-08-09",
-      "startAtUtc": "2026-08-09T07:30:00.000Z",
-      "endAtUtc": "2026-08-09T15:15:00.000Z",
-      "timezoneOffsetMinutes": -180,
-      "source": "CLOCK",
-      "isManuallyEdited": false,
-      "createdAtUtc": "2026-08-09T07:30:00.000Z",
-      "updatedAtUtc": "2026-08-09T15:15:00.000Z"
-    }
   ],
-  "dayRecords": {}
+  dayRecords: {
+    // 12.09.2026: א ראש השנה (שבת)
+    "2026-09-12": {
+      localDate: "2026-09-12",
+      status: "HOLIDAY",
+      creditedSeconds: 0,
+      note: "א ראש השנה",
+      isManuallyEdited: true,
+      createdAtUtc: "2026-09-12T00:00:00.000Z",
+      updatedAtUtc: "2026-09-12T00:00:00.000Z"
+    },
+    // 13.09.2026: ב ראש השנה
+    "2026-09-13": {
+      localDate: "2026-09-13",
+      status: "HOLIDAY",
+      creditedSeconds: 0, // בדוח הנמל רשומים רק 12 ימי עבודה ללא זיכוי שעות חג
+      note: "ב ראש השנה",
+      isManuallyEdited: true,
+      createdAtUtc: "2026-09-13T00:00:00.000Z",
+      updatedAtUtc: "2026-09-13T00:00:00.000Z"
+    },
+    // 20.09.2026: העדרות
+    "2026-09-20": {
+      localDate: "2026-09-20",
+      status: "MISSING",
+      creditedSeconds: 0,
+      note: "העדרות",
+      isManuallyEdited: true,
+      createdAtUtc: "2026-09-20T00:00:00.000Z",
+      updatedAtUtc: "2026-09-20T00:00:00.000Z"
+    },
+    // 21.09.2026: יום כיפור
+    "2026-09-21": {
+      localDate: "2026-09-21",
+      status: "HOLIDAY",
+      creditedSeconds: 0,
+      note: "יום כיפור",
+      isManuallyEdited: true,
+      createdAtUtc: "2026-09-21T00:00:00.000Z",
+      updatedAtUtc: "2026-09-21T00:00:00.000Z"
+    }
+  }
 };

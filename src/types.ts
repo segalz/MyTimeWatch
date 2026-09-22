@@ -95,6 +95,11 @@ export interface MonthCalculation {
   weeklyOvertime150Seconds: number;
   fridayRegularSeconds: number;
   saturday150Seconds: number;
+
+  // Exact metrics matching attendance reports
+  grossOvertimeSeconds: number; // 125% + 150% overtime
+  deficiencyHoursSeconds: number; // Deficit in days worked under standard
+  netOvertimeSeconds: number; // grossOvertimeSeconds - deficiencyHoursSeconds
   
   // Financial agorot
   overtime125Agorot: number;
