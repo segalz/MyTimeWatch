@@ -1,0 +1,6 @@
+{
+  "name": "דיווח נוכחות - אפליקציית שעות אישית",
+  "description": "אפליקציית מעקב דיווח נוכחות וחישוב שעות עבודה אישית לפי תקן יומי ושבועי, שעות נוספות, ימי מחלה וחופשה, וחישוב שכר משוער",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

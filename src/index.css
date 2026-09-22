@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+:root {
+  direction: rtl;
+}
+
+body {
+  direction: rtl;
+  text-align: right;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Rubik', sans-serif;
+}
+
