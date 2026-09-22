@@ -1,5 +1,6 @@
 import { DEFAULT_SETTINGS, toLocalDateString } from '../domain/attendance';
 import { AppSettings, AutoClockOutConfig, DayRecord, WorkSession } from '../types';
+import { EMBEDDED_USER_BACKUP } from '../data/userBackup';
 
 const SETTINGS_KEY = 'attendance_app_settings_v1';
 const SESSIONS_KEY = 'attendance_app_sessions_v1';
@@ -264,6 +265,35 @@ export class StorageService {
     } catch (e: any) {
       return { success: false, error: 'קובץ לא תקין או פגום: ' + e.message };
     }
+  }
+
+  /**
+   * Restores embedded user backup (saved from user export)
+   */
+  static restoreEmbeddedBackup(): { success: boolean; sessionsCount: number } {
+    try {
+      if (EMBEDDED_USER_BACKUP.settings) {
+        StorageService.saveSettings(EMBEDDED_USER_BACKUP.settings);
+      }
+      if (Array.isArray(EMBEDDED_USER_BACKUP.sessions)) {
+        StorageService.saveWorkSessions(EMBEDDED_USER_BACKUP.sessions);
+      }
+      if (EMBEDDED_USER_BACKUP.dayRecords) {
+        StorageService.saveDayRecords(EMBEDDED_USER_BACKUP.dayRecords);
+      }
+      return { success: true, sessionsCount: EMBEDDED_USER_BACKUP.sessions.length };
+    } catch (e) {
+      console.error('Failed to restore embedded backup', e);
+      return { success: false, sessionsCount: 0 };
+    }
+  }
+
+  static getEmbeddedBackupInfo() {
+    return {
+      exportedAt: EMBEDDED_USER_BACKUP.exportedAt,
+      sessionsCount: EMBEDDED_USER_BACKUP.sessions.length,
+      hourlyRate: EMBEDDED_USER_BACKUP.settings.hourlyRate,
+    };
   }
 
   /**

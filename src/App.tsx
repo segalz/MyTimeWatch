@@ -32,11 +32,11 @@ export default function App() {
   const [isSessionModalOpen, setIsSessionModalOpen] = useState(false);
   const [sessionToEdit, setSessionToEdit] = useState<WorkSession | undefined>(undefined);
 
-  // Auto seed demo data if completely empty on first run
+  // Auto seed user data if completely empty on fresh install/first run
   useEffect(() => {
     const existing = StorageService.getWorkSessions();
     if (existing.length === 0) {
-      StorageService.generateDemoData();
+      StorageService.restoreEmbeddedBackup();
       refreshData();
     }
   }, []);

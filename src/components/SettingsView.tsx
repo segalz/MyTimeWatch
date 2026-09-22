@@ -31,6 +31,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const [savedFeedback, setSavedFeedback] = useState(false);
   const [actionFeedback, setActionFeedback] = useState<string | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
+  const [showConfirmRestoreBackup, setShowConfirmRestoreBackup] = useState(false);
   const [showConfirmClear, setShowConfirmClear] = useState(false);
   const [showConfirmDemo, setShowConfirmDemo] = useState(false);
   const [showTextBackupModal, setShowTextBackupModal] = useState(false);
@@ -51,55 +52,85 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     onRefreshData();
   };
 
+  const handleRestoreUserBackup = () => {
+    const res = StorageService.restoreEmbeddedBackup();
+    if (res.success) {
+      showToast(`הנתונים שוחזרו בהצלחה! (${res.sessionsCount} משמרות + שכר ${StorageService.getSettings().hourlyRate} ₪)`);
+      onRefreshData();
+      setShowConfirmRestoreBackup(false);
+    } else {
+      showToast('שגיאה בשחזור הנתונים');
+    }
+  };
+
   const handleExportJson = async () => {
     const jsonStr = StorageService.exportJson();
     const dateStr = new Date().toISOString().substring(0, 10);
     const fileName = `attendance_backup_${dateStr}.json`;
 
-    // 1. Try native Web Share API (native Android share sheet to WhatsApp, Drive, Gmail, Files)
+    // 1. Try native Web Share API with File (Supported in newer WebViews and Mobile Browsers)
     if (typeof navigator !== 'undefined' && navigator.share) {
       try {
-        const file = new File([jsonStr], fileName, { type: 'application/json' });
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        let fileObj: File | null = null;
+        try {
+          fileObj = new File([jsonStr], fileName, { type: 'application/json' });
+        } catch {
+          fileObj = null;
+        }
+
+        if (fileObj && navigator.canShare && navigator.canShare({ files: [fileObj] })) {
           await navigator.share({
-            title: 'גיבוי דיווחי שעות נוכחות',
-            files: [file],
+            title: 'גיבוי דיווחי נוכחות',
+            files: [fileObj],
           });
           showToast('קובץ הגיבוי שותף בהצלחה!');
           return;
         } else {
-          // If files not supported by share target, share text
+          // If file sharing is not supported by the WebView share target, share as structured text
           await navigator.share({
-            title: 'גיבוי דיווחי שעות נוכחות',
+            title: 'גיבוי דיווחי נוכחות',
             text: jsonStr,
           });
-          showToast('תוכן הגיבוי שותף בהצלחה!');
+          showToast('טקסט הגיבוי שותף בהצלחה! (ניתן לשלוח לוואטסאפ או למייל)');
           return;
         }
       } catch (err: any) {
-        if (err?.name === 'AbortError') return; // User closed the share sheet
+        if (err?.name === 'AbortError') return; // User closed sheet
       }
     }
 
-    // 2. Browser file download fallback
+    // 2. Android WebView Blob / Data-URI download trigger
     try {
-      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = fileName;
+      a.target = '_blank';
       document.body.appendChild(a);
       a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      showToast('קובץ הגיבוי הורד בהצלחה');
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 500);
+      showToast('הורדת קובץ הגיבוי הופעלה');
+      return;
     } catch {
-      // If download fails inside WebView, open the text copy modal
-      setBackupText(jsonStr);
-      setTextModalTab('export');
-      setShowTextBackupModal(true);
-      showToast('פתח חלון גיבוי טקסטואלי');
+      // Fallback below
     }
+
+    // 3. If WebView restricts local blob downloads, automatically copy and open modal
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(jsonStr);
+      }
+    } catch {
+      // ignore
+    }
+    setBackupText(jsonStr);
+    setTextModalTab('export');
+    setShowTextBackupModal(true);
+    showToast('חלון הגיבוי נפתח (הטקסט הועתק גם ללוח)');
   };
 
   const handleCopyBackupToClipboard = async () => {
@@ -424,13 +455,13 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           <button
             type="button"
             onClick={handleExportJson}
-            className="flex items-center justify-center space-x-1 space-x-reverse bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 p-2 rounded-lg font-semibold transition-colors"
+            className="flex items-center justify-center space-x-1.5 space-x-reverse bg-blue-600 hover:bg-blue-700 text-white p-2.5 rounded-xl font-bold shadow-xs transition-colors"
           >
-            <Share2 className="w-4 h-4 text-blue-600" />
-            <span>שתף / הורד קובץ</span>
+            <Share2 className="w-4 h-4" />
+            <span>שתף / שמור גיבוי</span>
           </button>
 
-          <label className="flex items-center justify-center space-x-1 space-x-reverse bg-slate-100 hover:bg-slate-200 text-slate-800 p-2 rounded-lg font-semibold cursor-pointer transition-colors border border-slate-200">
+          <label className="flex items-center justify-center space-x-1.5 space-x-reverse bg-slate-100 hover:bg-slate-200 text-slate-800 p-2.5 rounded-xl font-semibold cursor-pointer transition-colors border border-slate-200">
             <Upload className="w-4 h-4 text-emerald-600" />
             <span>ייבא מקובץ JSON</span>
             <input
@@ -455,19 +486,34 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
           <button
             type="button"
-            onClick={() => handleOpenTextModal('import')}
+            onClick={() => handleOpenTextModal('export')}
             className="flex items-center justify-center space-x-1 space-x-reverse bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 p-2 rounded-lg font-semibold transition-colors"
           >
             <FileText className="w-3.5 h-3.5 text-slate-500" />
-            <span>צפייה / שחזור מטקסט</span>
+            <span>צפייה בטקסט הגיבוי</span>
           </button>
+        </div>
+
+        {/* Embedded Safe Backup Restore Button */}
+        <div className="pt-2 border-t border-slate-100">
+          <button
+            type="button"
+            onClick={() => setShowConfirmRestoreBackup(true)}
+            className="w-full flex items-center justify-center space-x-2 space-x-reverse bg-emerald-500 hover:bg-emerald-600 text-white p-2.5 rounded-xl font-bold transition-all shadow-xs"
+          >
+            <CheckCircle2 className="w-4 h-4" />
+            <span>שחזר גיבוי אחרון (43 משמרות + הגדרות)</span>
+          </button>
+          <p className="text-3xs text-slate-400 text-center mt-1">
+            משחזר ישירות את הנתונים שלך (כולל תעריף 159.3 ₪ והדיווחים עד ספטמבר)
+          </p>
         </div>
 
         <div className="pt-2 border-t border-slate-100 flex justify-between items-center text-xs">
           <button
             type="button"
             onClick={() => setShowConfirmDemo(true)}
-            className="text-emerald-700 hover:text-emerald-800 font-bold bg-emerald-50 px-2.5 py-1.5 rounded-lg border border-emerald-200 hover:bg-emerald-100 transition-colors"
+            className="text-slate-600 hover:text-slate-800 font-semibold bg-slate-100 px-2.5 py-1.5 rounded-lg border border-slate-200 transition-colors"
           >
             טען נתוני הדגמה
           </button>
@@ -485,7 +531,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
       {/* App Version Info Footer */}
       <div className="text-center py-2 text-2xs text-slate-400 select-none">
-        דיווח נוכחות • גרסה 1.2.0
+        דיווח נוכחות • גרסה 1.4.0
       </div>
 
       {/* Action Toast Feedback */}
@@ -497,6 +543,38 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       )}
 
       {/* Confirm Modals */}
+      {showConfirmRestoreBackup && (
+        <div dir="rtl" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs">
+          <div className="bg-white rounded-2xl p-5 w-full max-w-xs shadow-2xl border border-slate-200 text-center space-y-4">
+            <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+              <CheckCircle2 className="w-6 h-6" />
+            </div>
+            <div className="space-y-1">
+              <h4 className="font-extrabold text-base text-slate-800">שחזור נתונים מגיבוי</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                האם לשחזר את הגיבוי האחרון שנשמר במערכת?
+                <br />
+                <span className="font-semibold text-slate-800">43 משמרות עבודה, הגדרות שכר (159.3 ₪ לשעה) ותקן מלא.</span>
+              </p>
+            </div>
+            <div className="flex items-center space-x-2 space-x-reverse pt-2">
+              <button
+                onClick={handleRestoreUserBackup}
+                className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-colors shadow-xs"
+              >
+                שחזר עכשיו
+              </button>
+              <button
+                onClick={() => setShowConfirmRestoreBackup(false)}
+                className="flex-1 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-colors"
+              >
+                ביטול
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showConfirmDemo && (
         <div dir="rtl" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs">
           <div className="bg-white rounded-2xl p-5 w-full max-w-xs shadow-2xl border border-slate-200 text-center space-y-4">

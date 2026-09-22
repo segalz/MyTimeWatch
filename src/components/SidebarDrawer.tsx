@@ -137,7 +137,7 @@ export const SidebarDrawer: React.FC<SidebarDrawerProps> = ({
 
             {/* Footer */}
             <div className="p-3 bg-slate-50 border-t border-slate-200 text-center text-xs text-slate-400">
-              גרסה 1.2.0 • מעקב שעות אישי
+              גרסה 1.4.0 • מעקב שעות אישי
             </div>
           </motion.div>
 
