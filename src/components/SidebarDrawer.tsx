@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, User, Database, RefreshCw, FileText, Info, ShieldCheck } from 'lucide-react';
+import { X, User, Database, RefreshCw, FileText, Info, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { StorageService } from '../services/storage';
 
 interface SidebarDrawerProps {
@@ -14,8 +14,16 @@ export const SidebarDrawer: React.FC<SidebarDrawerProps> = ({
   onClose,
   onDataChanged,
 }) => {
+  const [showConfirmRestore, setShowConfirmRestore] = useState(false);
   const [showConfirmClear, setShowConfirmClear] = useState(false);
   const [showConfirmDemo, setShowConfirmDemo] = useState(false);
+
+  const handleRestoreUserBackup = () => {
+    StorageService.restoreEmbeddedBackup();
+    onDataChanged();
+    setShowConfirmRestore(false);
+    onClose();
+  };
 
   const handleGenerateDemoData = () => {
     StorageService.generateDemoData();
@@ -80,10 +88,21 @@ export const SidebarDrawer: React.FC<SidebarDrawerProps> = ({
                 </h4>
                 
                 <button
-                  onClick={() => setShowConfirmDemo(true)}
-                  className="w-full flex items-center space-x-3 space-x-reverse px-3 py-2.5 rounded-lg text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors text-right"
+                  onClick={() => setShowConfirmRestore(true)}
+                  className="w-full flex items-center space-x-3 space-x-reverse px-3 py-2.5 rounded-lg text-slate-800 bg-emerald-50 hover:bg-emerald-100 hover:text-emerald-800 transition-colors text-right border border-emerald-200/80"
                 >
-                  <Database className="w-5 h-5 text-emerald-600" />
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                  <div className="flex flex-col text-right">
+                    <span className="font-bold text-sm text-emerald-900">שחזר גיבוי אישי מלא</span>
+                    <span className="text-xs text-emerald-700">שחזור 43 משמרות + שכר 159.3 ₪ והגדרות</span>
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => setShowConfirmDemo(true)}
+                  className="w-full flex items-center space-x-3 space-x-reverse px-3 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors text-right"
+                >
+                  <Database className="w-5 h-5 text-slate-500" />
                   <div className="flex flex-col text-right">
                     <span className="font-semibold text-sm">טען נתוני הדגמה</span>
                     <span className="text-xs text-slate-500">טעינת דיווחים לדוגמה לבדיקת דוח חודשי</span>
@@ -142,6 +161,36 @@ export const SidebarDrawer: React.FC<SidebarDrawerProps> = ({
           </motion.div>
 
           {/* Confirmation Modals */}
+          {showConfirmRestore && (
+            <div dir="rtl" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs">
+              <div className="bg-white rounded-2xl p-5 w-full max-w-xs shadow-2xl border border-slate-200 text-center space-y-4">
+                <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="w-6 h-6" />
+                </div>
+                <div className="space-y-1">
+                  <h4 className="font-extrabold text-base text-slate-800">שחזור נתונים מלא</h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    פעולה זו תשחזר במדויק את כל 43 המשמרות האישיות שלך, כולל תעריף 159.3 ₪ לשעה והגדרות התקן השבועיות.
+                  </p>
+                </div>
+                <div className="flex items-center space-x-2 space-x-reverse pt-2">
+                  <button
+                    onClick={handleRestoreUserBackup}
+                    className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-colors shadow-xs"
+                  >
+                    שחזר עכשיו
+                  </button>
+                  <button
+                    onClick={() => setShowConfirmRestore(false)}
+                    className="flex-1 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-colors"
+                  >
+                    ביטול
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {showConfirmDemo && (
             <div dir="rtl" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs">
               <div className="bg-white rounded-2xl p-5 w-full max-w-xs shadow-2xl border border-slate-200 text-center space-y-4">
