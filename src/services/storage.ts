@@ -2,10 +2,10 @@ import { DEFAULT_SETTINGS, toLocalDateString } from '../domain/attendance';
 import { AppSettings, AutoClockOutConfig, DayRecord, WorkSession } from '../types';
 import { EMBEDDED_USER_BACKUP } from '../data/userBackup';
 
-const SETTINGS_KEY = 'attendance_app_settings_v1';
-const SESSIONS_KEY = 'attendance_app_sessions_v1';
-const DAY_RECORDS_KEY = 'attendance_app_day_records_v1';
-const AUTO_CLOCK_OUT_KEY = 'attendance_auto_clock_out_v1';
+const SETTINGS_KEY = 'worklog_pro_settings_v2';
+const SESSIONS_KEY = 'worklog_pro_sessions_v2';
+const DAY_RECORDS_KEY = 'worklog_pro_day_records_v2';
+const AUTO_CLOCK_OUT_KEY = 'worklog_pro_auto_clock_out_v2';
 
 export class StorageService {
   /**
@@ -14,12 +14,12 @@ export class StorageService {
   static getSettings(): AppSettings {
     try {
       const data = localStorage.getItem(SETTINGS_KEY);
-      if (!data) return DEFAULT_SETTINGS;
+      if (!data) return EMBEDDED_USER_BACKUP.settings || DEFAULT_SETTINGS;
       const parsed = JSON.parse(data);
-      return { ...DEFAULT_SETTINGS, ...parsed };
+      return { ...DEFAULT_SETTINGS, ...(EMBEDDED_USER_BACKUP.settings || {}), ...parsed };
     } catch (e) {
       console.error('Failed to parse settings from storage', e);
-      return DEFAULT_SETTINGS;
+      return EMBEDDED_USER_BACKUP.settings || DEFAULT_SETTINGS;
     }
   }
 
@@ -36,7 +36,12 @@ export class StorageService {
   static getWorkSessions(): WorkSession[] {
     try {
       const data = localStorage.getItem(SESSIONS_KEY);
-      if (!data) return [];
+      if (!data) {
+        // Fresh install / first launch: immediately populate with user's embedded backup
+        StorageService.restoreEmbeddedBackup();
+        const freshData = localStorage.getItem(SESSIONS_KEY);
+        return freshData ? JSON.parse(freshData) : EMBEDDED_USER_BACKUP.sessions;
+      }
       return JSON.parse(data);
     } catch (e) {
       console.error('Failed to parse sessions from storage', e);
@@ -57,11 +62,11 @@ export class StorageService {
   static getDayRecords(): Record<string, DayRecord> {
     try {
       const data = localStorage.getItem(DAY_RECORDS_KEY);
-      if (!data) return {};
+      if (!data) return EMBEDDED_USER_BACKUP.dayRecords || {};
       return JSON.parse(data);
     } catch (e) {
       console.error('Failed to parse day records from storage', e);
-      return {};
+      return EMBEDDED_USER_BACKUP.dayRecords || {};
     }
   }
 

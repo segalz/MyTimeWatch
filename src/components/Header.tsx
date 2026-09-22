@@ -37,11 +37,16 @@ export const Header: React.FC<HeaderProps> = ({ onOpenDrawer }) => {
 
       {/* Main Titles */}
       <div className="max-w-md mx-auto text-center mt-2 mb-1">
-        <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">
-          דיווח נוכחות
-        </h1>
-        <p className="text-sm font-medium text-slate-500 mt-0.5">
-          אפליקציית שעות אישית
+        <div className="flex items-center justify-center space-x-2 space-x-reverse">
+          <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">
+            WorkLog Pro
+          </h1>
+          <span className="text-3xs bg-emerald-600 text-white font-bold px-2 py-0.5 rounded-full shadow-xs">
+            v2.0
+          </span>
+        </div>
+        <p className="text-sm font-semibold text-emerald-700 mt-0.5">
+          דיווח נוכחות ומעקב שעות אישי
         </p>
       </div>
     </header>

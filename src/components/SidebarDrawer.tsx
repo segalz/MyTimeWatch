@@ -155,8 +155,8 @@ export const SidebarDrawer: React.FC<SidebarDrawerProps> = ({
             </div>
 
             {/* Footer */}
-            <div className="p-3 bg-slate-50 border-t border-slate-200 text-center text-xs text-slate-400">
-              גרסה 1.4.0 • מעקב שעות אישי
+            <div className="p-3 bg-slate-50 border-t border-slate-200 text-center text-xs text-slate-500 font-semibold">
+              WorkLog Pro • גרסה 2.0.0
             </div>
           </motion.div>
 

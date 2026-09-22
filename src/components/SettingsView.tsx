@@ -530,8 +530,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* App Version Info Footer */}
-      <div className="text-center py-2 text-2xs text-slate-400 select-none">
-        דיווח נוכחות • גרסה 1.4.0
+      <div className="text-center py-2 text-2xs text-slate-500 font-semibold select-none">
+        WorkLog Pro • גרסה 2.0.0
       </div>
 
       {/* Action Toast Feedback */}
